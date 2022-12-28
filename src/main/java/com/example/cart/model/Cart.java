@@ -13,7 +13,6 @@ import javax.validation.constraints.NotEmpty;
 public class Cart {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;

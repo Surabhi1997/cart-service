@@ -1,16 +1,16 @@
 package com.example.cart.controller;
 
 import com.example.cart.model.Cart;
-import com.example.cart.response.UserResponse;
+import com.example.cart.response.ResponseHandler;
 import com.example.cart.service.CartService;
 import com.example.cart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/cart")
@@ -23,21 +23,27 @@ public class CartController {
     UserService userService;
 
     @PostMapping
-    public Cart addItemToCart(@RequestBody Cart cart)
-    {
-       return cartService.addItem(cart);
+    public Cart addItemToCart(@RequestBody Cart cart) {
+        return cartService.addItem(cart);
     }
 
     @GetMapping("/{userId}")
-    public List<Cart> getCartItems(@PathVariable Long userId)
-    {
-
-        return cartService.getCartItems(userId);
+    public ResponseEntity<?> getCartItems(@PathVariable Long userId) throws IOException {
+        return ResponseHandler.responseBuilder(userService.getUserDetails(userId), HttpStatus.OK, cartService.getCartItems(userId));
     }
 
-    @GetMapping("/userDetails/{userId}")
-    public UserResponse getUserDetails(@PathVariable Long userId) throws IOException {
-        return userService.getUserDetails(userId);
+    // communicate with order-service - 'http://localhost:8080/cart/cartId?userId=10'
+    @GetMapping("/cartId")
+    public int orderTotal(@RequestParam Long userId) {
+        return cartService.totalAmount(userId);
     }
+
+
+//    @GetMapping("/order/{userId}")
+//    public int orderTotal(@PathVariable Long userId)
+//    {
+//        return cartService.totalAmount(userId);
+//    }
+
 
 }

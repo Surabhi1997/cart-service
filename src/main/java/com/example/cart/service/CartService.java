@@ -11,4 +11,7 @@ public interface CartService {
 
      List<Cart> getCartItems(Long userId);
 
+    // communicate with order-service
+     int totalAmount(Long userId);
+
 }

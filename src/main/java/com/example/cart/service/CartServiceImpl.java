@@ -32,4 +32,13 @@ public class CartServiceImpl implements CartService {
             throw new UserNotFoundException("User not found with id : " + userId);
         }
     }
+
+    // communicate with order-service
+    @Override
+    public int totalAmount(Long userId) {
+        List<Cart> cartList = cardRepository.findByUserId(userId);
+        return cartList.stream().map(Cart::getPrice).mapToInt(i -> Integer.parseInt(i)).sum();
+
+    }
+
 }

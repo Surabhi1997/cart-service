@@ -33,17 +33,9 @@ public class CartController {
     }
 
     // communicate with order-service - 'http://localhost:8080/cart/cartId?userId=10'
-    @GetMapping("/cartId")
-    public int orderTotal(@RequestParam Long userId) {
+    @GetMapping("/total/{userId}")
+    public int orderTotal(@PathVariable Long userId) {
         return cartService.totalAmount(userId);
     }
-
-
-//    @GetMapping("/order/{userId}")
-//    public int orderTotal(@PathVariable Long userId)
-//    {
-//        return cartService.totalAmount(userId);
-//    }
-
 
 }

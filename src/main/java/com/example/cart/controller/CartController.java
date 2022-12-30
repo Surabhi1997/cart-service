@@ -32,7 +32,6 @@ public class CartController {
         return ResponseHandler.responseBuilder(userService.getUserDetails(userId), HttpStatus.OK, cartService.getCartItems(userId));
     }
 
-    // communicate with order-service - 'http://localhost:8080/cart/cartId?userId=10'
     @GetMapping("/total/{userId}")
     public int orderTotal(@PathVariable Long userId) {
         return cartService.totalAmount(userId);
